@@ -8,7 +8,8 @@
 #否则使用ARM编译器
 ARCH ?= x86
 TARGET = hello_main
-CFLAGS = -I.
+
+
 DEPS = hello_func.h
 OBJS = hello_main.o hello_func.o
 
