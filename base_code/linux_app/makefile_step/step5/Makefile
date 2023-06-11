@@ -1,59 +1,59 @@
-#Makefileæ ¼å¼
-#ç›®æ ‡æ–‡ä»¶:ä¾èµ–çš„æ–‡ä»¶
-#Tab å‘½ä»¤1
-#Tab å‘½ä»¤2
+#Makefile¸ñÊ½
+#Ä¿±êÎÄ¼þ:ÒÀÀµµÄÎÄ¼þ
+#Tab ÃüÁî1
+#Tab ÃüÁî2
 
-#å®šä¹‰å˜é‡
-#ARCHé»˜è®¤ä¸ºx86ï¼Œä½¿ç”¨gccç¼–è¯‘å™¨ï¼Œ
-#å¦åˆ™ä½¿ç”¨armç¼–è¯‘å™¨
+#¶¨Òå±äÁ¿
+#ARCHÄ¬ÈÏÎªx86£¬Ê¹ÓÃgcc±àÒëÆ÷£¬
+#·ñÔòÊ¹ÓÃarm±àÒëÆ÷
 ARCH ?= x86
 TARGET = hello_main
 
 
-#å­˜æ”¾ä¸­é—´æ–‡ä»¶çš„è·¯å¾„
+#´æ·ÅÖÐ¼äÎÄ¼þµÄÂ·¾¶
 BUILD_DIR = build_$(ARCH)
-#å­˜æ”¾æºæ–‡ä»¶çš„æ–‡ä»¶å¤¹
+#´æ·ÅÔ´ÎÄ¼þµÄÎÄ¼þ¼Ð
 SRC_DIR = sources
-#å­˜æ”¾å¤´æ–‡ä»¶çš„æ–‡ä»¶å¤¹
+#´æ·ÅÍ·ÎÄ¼þµÄÎÄ¼þ¼Ð
 INC_DIR = includes .
 
-#æºæ–‡ä»¶
+#Ô´ÎÄ¼þ
 SRCS = $(wildcard $(SRC_DIR)/*.c)
-#ç›®æ ‡æ–‡ä»¶ï¼ˆ*.oï¼‰
+#Ä¿±êÎÄ¼þ£¨*.o£©
 OBJS = $(patsubst %.c, $(BUILD_DIR)/%.o, $(notdir $(SRCS)))
-#å¤´æ–‡ä»¶
+#Í·ÎÄ¼þ
 DEPS = $(wildcard $(INC_DIR)/*.h)
 
-#æŒ‡å®šå¤´æ–‡ä»¶çš„è·¯å¾„
+#Ö¸¶¨Í·ÎÄ¼þµÄÂ·¾¶
 CFLAGS = $(patsubst %, -I%, $(INC_DIR))
 
-#æ ¹æ®è¾“å…¥çš„ARCHå˜é‡æ¥é€‰æ‹©ç¼–è¯‘å™¨
-#ARCH=x86ï¼Œä½¿ç”¨gcc
-#ARCH=armï¼Œä½¿ç”¨arm-gcc
+#¸ù¾ÝÊäÈëµÄARCH±äÁ¿À´Ñ¡Ôñ±àÒëÆ÷
+#ARCH=x86£¬Ê¹ÓÃgcc
+#ARCH=arm£¬Ê¹ÓÃarm-gcc
 ifeq ($(ARCH),x86)
   CC = gcc
 else
   CC = arm-linux-gnueabihf-gcc
 endif
 
-#ç›®æ ‡æ–‡ä»¶
+#Ä¿±êÎÄ¼þ
 $(BUILD_DIR)/$(TARGET): $(OBJS)
-		$(CC) -o $@ $^ $(CFLAGS) 
+ 		$(CC) -o $@ $^ $(CFLAGS) 
 
-#*.oæ–‡ä»¶çš„ç”Ÿæˆè§„åˆ™
+#*.oÎÄ¼þµÄÉú³É¹æÔò
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c $(DEPS)
-#åˆ›å»ºä¸€ä¸ªç¼–è¯‘ç›®å½•ï¼Œç”¨äºŽå­˜æ”¾è¿‡ç¨‹æ–‡ä»¶
-#å‘½ä»¤å‰å¸¦"@",è¡¨ç¤ºä¸åœ¨ç»ˆç«¯ä¸Šè¾“å‡º
+#´´½¨Ò»¸ö±àÒëÄ¿Â¼£¬ÓÃÓÚ´æ·Å¹ý³ÌÎÄ¼þ
+#ÃüÁîÇ°´ø"@",±íÊ¾²»ÔÚÖÕ¶ËÉÏÊä³ö
 	@mkdir -p $(BUILD_DIR)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-#ä¼ªç›®æ ‡
+#Î±Ä¿±ê
 .PHONY: clean cleanall
-#æŒ‰æž¶æž„åˆ é™¤
+#°´¼Ü¹¹É¾³ý
 clean:
 		rm -rf $(BUILD_DIR)
 
-#å…¨éƒ¨åˆ é™¤
+#È«²¿É¾³ý
 cleanall:
 		rm -rf build_x86 build_arm
 
